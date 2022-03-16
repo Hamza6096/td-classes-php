@@ -1,30 +1,34 @@
 <?php
-class Livre
+class Livre implements Stringable
 {
-    public string $titre;
-    public int $nbPage;
+    protected string $titre;
+    protected int $nbPage;
 
     public function __construct(string $titre, int $nbPage)
     {
         $this->titre = $titre;
         $this->nbPage = $nbPage;
     }
+    public function __toString(): string {
+        return "{$this->titre} ({$this->nbPage})<br>";
+        }
 }
 
 class Biblio
 {
-    public array $livres;
-    public function __construct(public string $nom)
+    
+    protected array $livres;
+    public function __construct(protected string $nom)
     {
     }
-    public function ajouter(Livre $livre): void
+    public function  ajouter (Livre $livre): void
     {
         $this->livres[] = $livre;
     }
     public function lister():void{
         echo "{$this->nom} :<br>";
         foreach($this->livres as $livre) {
-            echo "{$livre->titre} ({$livre->nbPage})<br>";
+            echo $livre;
         }
     }
 }
